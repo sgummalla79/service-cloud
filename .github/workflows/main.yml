@@ -12,7 +12,7 @@ on:
        logLevel:
         description: 'Log level'
         required: true
-        default: 'warning'
+        default: 'debug'
         type: choice
         options:
         - info
@@ -53,5 +53,22 @@ jobs:
       # Authenticate dev hub
       - name: "Authenticate Dev Hub"
         run: sfdx auth:sfdxurl:store -f ./DEVHUB_SFDX_URL.txt -a devhub -d
+
+      # Remove auth file
+      - name: "Remove auth file"
+        run: rm -f ./DEVHUB_SFDX_URL.txt
+
+      # Create scratch org
+      - name: "Create scratch org"
+        run: sfdx force:org:create -f config/project-scratch-def.json -a scratch-org -s -d 1
+
+      # Push source to scratch org
+      - name: "Push source to scratch org"
+        run: sfdx force:source:push
+
+      # Housekeeping
+      - name: "Delete scratch org"
+        if: always()
+        run: sfdx force:org:delete -p -u scratch-org
 
         
