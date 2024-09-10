@@ -27,5 +27,8 @@ jobs:
       # Store secret for dev hub
       - name: "print sfdx url"
         run: |
-            echo ${{secrets.DEVHUB_SFDX_URL}}
+            echo 'Suman'
+            echo "$HOME/sfdx/bin" >> $GITHUB_PATH
+            echo $GITHUB_PATH
+
         
