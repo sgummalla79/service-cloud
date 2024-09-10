@@ -18,6 +18,9 @@ on:
         - info
         - warning
         - debug
+env:
+  DEVHUB_SFDX_URL: force://PlatformCLI::5Aep861FpKlGRwv8KA7hsW5oNBYlaw2im9x6Bio0bkfPhWnm77TR92TDMyt1jHykzKz3LLmazSi66lPYwz5AvmK@sgummalla-service-cloud-org.my.salesforce.com
+  
 # Jobs to be executed
 jobs:
   source-deploy:
