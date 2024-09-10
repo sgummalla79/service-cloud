@@ -7,6 +7,17 @@ on:
       branches: [ master ]
       paths:
         - 'force-app/**'
+    workflow_dispatch:
+      inputs:
+       logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+        - info
+        - warning
+        - debug
 # Jobs to be executed
 jobs:
   source-deploy:
