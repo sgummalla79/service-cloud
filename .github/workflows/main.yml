@@ -29,6 +29,7 @@ jobs:
         run: |
             echo 'Suman'
             echo "$HOME/sfdx/bin" >> $GITHUB_PATH
+            echo $DEVHUB_SFDX_URL
             echo $GITHUB_PATH
 
         
