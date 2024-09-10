@@ -9,24 +9,34 @@ on:
         - 'force-app/**'
     workflow_dispatch:
       inputs:
-       logLevel:
-        description: 'Log level'
-        required: true
-        default: 'debug'
-        type: choice
-        options:
-        - info
-        - warning
-        - debug
-env:
-  DEVHUB_SFDX_URL: force://PlatformCLI::5Aep861FpKlGRwv8KA7hsW5oNBYlaw2im9x6Bio0bkfPhWnm77TR92TDMyt1jHykzKz3LLmazSi66lPYwz5AvmK@sgummalla-service-cloud-org.my.salesforce.com
-  
+          logLevel:
+            description: 'Log level'
+            required: true
+            default: 'warning'
+            type: choice
+            options:
+            - info
+            - warning
+            - debug
+          environment:
+            description: 'Environment to run tests against'
+            type: environment
+            required: true
 # Jobs to be executed
 jobs:
   source-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      - name : "set the environment"
+        run: |
+          echo "Log level: $LEVEL"
+          echo "Environment: $ENVIRONMENT"
+        env:
+          LEVEL: ${{ inputs.logLevel }}
+          TAGS: ${{ inputs.tags }}
+          ENVIRONMENT: ${{ inputs.environment }}
+          
       # Install Salesforce CLI
       - name: "Install Salesforce CLI"
         run: |
@@ -40,15 +50,10 @@ jobs:
       - name: "Checkout source code"
         uses: actions/checkout@v2
         
-      # print dev hub url
-      - name: "print sfdx url"
-        shell: bash
-        run: echo $DEVHUB_SFDX_URL
-
       # Store secret for dev hub
       - name: "Populate auth file with DEVHUB_SFDX_URL secret"
         shell: bash
-        run: echo $DEVHUB_SFDX_URL > ./DEVHUB_SFDX_URL.txt
+        run: echo ${{secrets.DEVHUB_SFDX_URL}} > ./DEVHUB_SFDX_URL.txt
 
       # Authenticate dev hub
       - name: "Authenticate Dev Hub"
