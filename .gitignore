@@ -43,3 +43,4 @@ $RECYCLE.BIN/
 **/__pycache__/
 **/.venv/
 **/venv/
+DEVHUB_SFDX_URL.txt
