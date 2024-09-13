@@ -1,12 +1,23 @@
 #Unique name for this workflow
-name: Deploy master to scratch
+name: Deploy to Production (service-cloud)
 
 # Definition when the workflow should run
 on:
-    push:
-      branches: [ master ]
-      paths:
-        - 'force-app/**'
+    workflow_dispatch:
+      inputs:
+          logLevel:
+            description: 'Log level'
+            required: true
+            default: 'warning'
+            type: choice
+            options:
+            - info
+            - warning
+            - debug
+          environment:
+            description: 'Environment to run tests against'
+            type: environment
+            required: true
 # Jobs to be executed
 jobs:
   source-deploy:
@@ -41,13 +52,4 @@ jobs:
 
       # Create scratch org
       - name: "Create scratch org"
-        run: sf org create scratch -f config/project-scratch-def.json -a scratch-org -v devhub --duration-days 1 -w 5
-
-      # Push source to scratch org
-      - name: "Push source to scratch org"
-        run: sf project deploy start --target-org scratch-org
-
-      # Housekeeping
-      - name: "Delete scratch org"
-        if: always()
-        run: sf org delete scratch -p --target-org scratch-org
+        run: sf project deploy start  --source-dir force-app --target-org devhub
