@@ -3,10 +3,21 @@ name: Deploy master branch to production org
 
 # Definition when the workflow should run
 on:
-    push:
-      branches: [ master ]
-      paths:
-        - 'force-app/**'
+    workflow_dispatch:
+      inputs:
+          logLevel:
+            description: 'Log level'
+            required: true
+            default: 'warning'
+            type: choice
+            options:
+            - info
+            - warning
+            - debug
+          environment:
+            description: 'Environment to run tests against'
+            type: environment
+            required: true
 # Jobs to be executed
 jobs:
   source-deploy:
