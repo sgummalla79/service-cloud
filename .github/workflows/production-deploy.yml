@@ -50,6 +50,6 @@ jobs:
       - name: "Remove auth file"
         run: rm -f ./DEVHUB_SFDX_URL.txt
 
-      # Create scratch org
-      - name: "Create scratch org"
+      # Start Deployment To Production
+      - name: "Start Deployment To Production"
         run: sf project deploy start  --source-dir force-app --target-org devhub
