@@ -1,5 +1,5 @@
 #Unique name for this workflow
-name: Deploy master branch to production org
+name: Deploy master branch to scratch org
 
 # Definition when the workflow should run
 on:
@@ -41,7 +41,7 @@ jobs:
 
       # Create scratch org
       - name: "Create scratch org"
-        run: sf org create scratch -f config/project-scratch-def.json -a scratch-org -v devhub --duration-days 1
+        run: sf org create scratch -f config/project-scratch-def.json -a scratch-org -v devhub --duration-days 1 -w 5
 
       # Push source to scratch org
       - name: "Push source to scratch org"
