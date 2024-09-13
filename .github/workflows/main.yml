@@ -17,10 +17,10 @@ jobs:
       - name: "Install Salesforce CLI"
         run: |
           wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
-          mkdir ~/sf
+          mkdir ~/sfdx
           tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
-          echo "$HOME/sf/bin" >> $GITHUB_PATH
-          ~/sf/bin/sf version
+          echo "$HOME/sfdx/bin" >> $GITHUB_PATH
+          ~/sfdx/bin/sf version
 
       # Checkout the source code
       - name: "Checkout source code"
@@ -51,5 +51,3 @@ jobs:
       - name: "Delete scratch org"
         if: always()
         run: sf org delete scratch -p --target-org scratch-org
-
-        
